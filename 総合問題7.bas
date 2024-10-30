@@ -1,8 +1,14 @@
 Option Explicit
+Dim strPassword As String
+Sub シート保護()
 
+    If Not ActiveSheet.ProtectContents Then
+        strPassword = InputBox("新しいパスワードを設定してください")
+        ActiveSheet.Protect Password:=strPassword, DrawingObjects:=True, Contents:=True, Scenarios:=True
+    End If
+End Sub
 Sub シート保護解除()
-    Dim true_pass As String
-    true_pass = "password"
+
     Dim pass_try As String
     Dim chances As Integer
     chances = 3
@@ -10,9 +16,9 @@ Sub シート保護解除()
     For i = 1 To chances
             pass_try = InputBox("パスワードを入力（大文字小文字を）", "パスワード入力", , 200, 200)
     
-    If pass_try = true_pass Then
+    If pass_try = strPassword Then
         MsgBox ("シート保護解除します")
-        ActiveSheet.Unprotect (true_pass)
+        ActiveSheet.Unprotect (pass_try)
         Exit For
     Else
         If i = 3 Then
@@ -22,9 +28,4 @@ Sub シート保護解除()
     End If
     Next i
 
-End Sub
-
-Sub シート保護()
-    
-    ActiveSheet.Protect DrawingObjects:=True, Contents:=True, Scenarios:=True
 End Sub
